@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment">
+    tools:context=".fragments.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -37,12 +37,13 @@
                     android:textColor="@color/light_accent"
                     android:textStyle="bold"
                     android:textSize="@dimen/_30ssp"/>
+
                 <ImageView
                     android:id="@+id/img_search"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_favourite"
+                    android:src="@drawable/ic_search"
                     />
 
 
@@ -69,15 +70,18 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_what_would_you_eat"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:padding="@dimen/_30sdp"
                 app:cardUseCompatPadding="true"
                 android:layout_marginHorizontal="@dimen/margin_start"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:elevation="@dimen/_200sdp">
 
                 <ImageView
                     android:id="@+id/img_random_meal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/light_primary"/>
+                    android:background="@color/light_primary"
+                    android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
 
             <TextView
