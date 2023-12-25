@@ -132,4 +132,14 @@
         android:layout_gravity="bottom|center"
         android:src="@drawable/ic_youtube"/>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_anchor="@id/appbar_meal"
+        app:layout_anchorGravity="bottom"
+        app:indicatorColor="@color/g_black"
+        android:visibility="gone"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
