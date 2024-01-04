@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -21,8 +22,11 @@ import com.example.food_app.adapters.MostPopularItemsAdapter
 import com.example.food_app.databinding.FragmentHomeBinding
 import com.example.food_app.pojo.Meal
 import com.example.food_app.viewModel.HomeViewModel
+import com.example.food_app.viewModel.SharedMainViewModel
 
 class HomeFragment : Fragment() {
+
+    val sharedMainViewModel: SharedMainViewModel by activityViewModels()
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
@@ -30,8 +34,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var popularItemsAdapter: MostPopularItemsAdapter
     private lateinit var mealCategoriesAdapter: MealCategoriesAdapter
-
-    private lateinit var navController: NavController
 
     companion object {
         const val MEAL_ID = "com.example.food_app.fragments.idMeal"
@@ -61,9 +63,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-
         prepareMostPopularItemsAdapter()
         prepareMealCategoriesAdapter()
 
@@ -91,10 +90,9 @@ class HomeFragment : Fragment() {
 
     private fun onCategoriesItemClicked() {
         mealCategoriesAdapter.onItemClicked = {
-            findNavController().navigate(
-                R.id.action_homeFragment_to_mealsByCategory,
-                bundleOf("categoryId" to it.idCategory, "categoryName" to it.strCategory)
-            )
+            findNavController().navigate(R.id.action_homeFragment_to_mealsByCategory)
+
+            sharedMainViewModel.setSHaredMeaCategory(it)
         }
 
     }
@@ -146,15 +144,16 @@ class HomeFragment : Fragment() {
 
     private fun observeRandomMeal() {
         homeViewModel.observeRandomMealLiveData()
-            .observe(viewLifecycleOwner, object : Observer<Meal> {
-                override fun onChanged(value: Meal) {
-                    Glide.with(this@HomeFragment)
-                        .load(value.strMealThumb)
-                        .into(binding.imgRandomMeal)
+            .observe(viewLifecycleOwner
+            ) { value ->
+                Glide.with(this@HomeFragment)
+                    .load(value.strMealThumb)
+                    .into(binding.imgRandomMeal)
 
-                    meal = value
-                }
-            })
+                meal = value
+
+                binding.progressRandMeal.visibility = View.INVISIBLE
+            }
     }
 
 

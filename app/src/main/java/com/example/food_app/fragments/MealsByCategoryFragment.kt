@@ -1,24 +1,42 @@
 package com.example.food_app.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.example.food_app.R
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.food_app.activities.MealActivity
+import com.example.food_app.adapters.MealsByCategoryAdapter
+import com.example.food_app.databinding.FragmentMealsByCategoryBinding
+import com.example.food_app.pojo.MealCategory
+import com.example.food_app.viewModel.MealByCategoryViewModel
+import com.example.food_app.viewModel.SharedMainViewModel
 
 
 class MealsByCategoryFragment : Fragment() {
 
+    private val sharedMainViewModel: SharedMainViewModel by activityViewModels()
+
+    private lateinit var binding: FragmentMealsByCategoryBinding
+
+    private lateinit var mealByCategoryViewModel: MealByCategoryViewModel
+    private lateinit var currentMealCategory: MealCategory
+
+    private lateinit var mealsByCategoryAdapter: MealsByCategoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         onBackPressAction()
+        mealByCategoryViewModel = ViewModelProvider(this)[MealByCategoryViewModel::class.java]
 
+        mealsByCategoryAdapter = MealsByCategoryAdapter()
 
     }
 
@@ -34,9 +52,49 @@ class MealsByCategoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meals_by_category, container, false)
+    ): View {
+        binding = FragmentMealsByCategoryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        prepareMealsByCategoryAdapter()
+
+        currentMealCategory = sharedMainViewModel.observerSharedMealCategory().value!!
+
+        mealByCategoryViewModel.getMealsByCategory(currentMealCategory.strCategory)
+        observeMealCategories()
+    }
+
+    private fun prepareMealsByCategoryAdapter() {
+        onMealItemClick()
+
+        binding.recViewMealsByCategory.apply {
+            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+            adapter = mealsByCategoryAdapter
+        }
+    }
+
+    private fun onMealItemClick() {
+        mealsByCategoryAdapter.onItemClicked = { meal ->
+            val intent = Intent(activity, MealActivity::class.java)
+            intent.putExtra(HomeFragment.MEAL_ID, meal.idMeal)
+            intent.putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
+            intent.putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+
+            startActivity(intent)
+        }
+    }
+
+    private fun observeMealCategories() {
+        mealByCategoryViewModel.observerMealsByCategoryLiveData().observe(viewLifecycleOwner) {
+            binding.tvMealsCount.text = "${currentMealCategory.strCategory}: ${it.size}"
+            mealsByCategoryAdapter.setMeals(it)
+
+            binding.loadingMeals.visibility = View.INVISIBLE
+        }
     }
 
 }

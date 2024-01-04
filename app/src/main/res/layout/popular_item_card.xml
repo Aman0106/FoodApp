@@ -4,13 +4,21 @@
     android:layout_height="@dimen/_90sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/_10sdp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    android:elevation="@dimen/_10sdp">
+
+    <ProgressBar
+        android:id="@+id/progress_meal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/light_primary"
+        android:layout_gravity="center" />
 
     <ImageView
         android:id="@+id/img_popular_meal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:background="@color/g_black"/>
+        android:scaleType="centerCrop"/>
+
 
 </androidx.cardview.widget.CardView>

@@ -18,16 +18,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ProgressBar
+                android:id="@+id/loading_meals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/light_primary"
+
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_meals_count" />
+
             <TextView
                 android:id="@+id/tv_meals_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="25 Meals Found"
+                android:text="Fetching..."
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:fontFamily="@font/noto_sans_regular"
-                android:textColor="@color/g_black"
+                android:textColor="@color/light_primary"
+                android:textStyle="bold"
                 android:textSize="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
@@ -35,11 +47,12 @@
                 android:id="@+id/rec_view_meals_by_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
                 app:layout_constraintTop_toBottomOf="@+id/tv_meals_count"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginHorizontal="@dimen/margin_start"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                android:layout_marginTop="@dimen/_5sdp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

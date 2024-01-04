@@ -34,9 +34,9 @@
         android:label="Meals by Category"
         tools:layout="@layout/fragment_meals_by_category">
 
-<!--        <argument-->
-<!--            android:name="categoryId"-->
-<!--            app:argType="integer"-->
-<!--            android:defaultValue="0" />-->
+        <argument
+            android:name="categoryId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.food_app.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,6 +27,7 @@ class MostPopularItemsAdapter: RecyclerView.Adapter<MostPopularItemsAdapter.Popu
             .load(mealsList[position].strMealThumb)
             .into(holder.binding.imgPopularMeal)
 
+
         holder.itemView.setOnClickListener {
             onItemClicked.invoke(mealsList[position])
         }
@@ -36,5 +38,5 @@ class MostPopularItemsAdapter: RecyclerView.Adapter<MostPopularItemsAdapter.Popu
     }
 
 
-    class PopularMealsViewHolder(val binding:PopularItemCardBinding): RecyclerView.ViewHolder(binding.root)
+    inner class PopularMealsViewHolder(val binding:PopularItemCardBinding): RecyclerView.ViewHolder(binding.root)
 }
