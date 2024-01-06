@@ -71,12 +71,12 @@ class HomeFragment : Fragment() {
         onRandomMealClick()
 
         homeViewModel.getMealByCategory("Seafood")
-        observeMealsByCategory()
+        observeMealsByCategory()                                //TODO: Add a progress bar
 
         onPopularItemClicker()
 
         homeViewModel.getMealsCategories()
-        observeMealCategories()
+        observeMealCategories()                                //TODO: Add a progress bar
         onCategoriesItemClicked()
 
     }
@@ -84,6 +84,7 @@ class HomeFragment : Fragment() {
 
     private fun observeMealCategories() {
         homeViewModel.observeMealsCategories().observe(viewLifecycleOwner) { categories ->
+
             mealCategoriesAdapter.setMealCategories(categories)
         }
     }

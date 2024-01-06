@@ -4,16 +4,16 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.food_app.R
+import com.example.food_app.dao.MealDatabase
 import com.example.food_app.databinding.ActivityMealBinding
 import com.example.food_app.fragments.HomeFragment
 import com.example.food_app.pojo.Meal
 import com.example.food_app.viewModel.MealViewModel
+import com.example.food_app.viewModel.MealViewModelFactory
 
 class MealActivity : AppCompatActivity() {
 
@@ -23,6 +23,7 @@ class MealActivity : AppCompatActivity() {
     private lateinit var mealId: String
     private lateinit var mealName: String
     private lateinit var mealThumb: String
+    private var currentMeal: Meal? = null
     private lateinit var youtubeLink: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,11 +37,25 @@ class MealActivity : AppCompatActivity() {
         getMealInformationFromIntent()
         setInformationInViews()
 
-        mealViewModel = ViewModelProvider(this)[MealViewModel::class.java]
+        val mealDatabase = MealDatabase.getInstance(this)
+        val mealViewModelFactory = MealViewModelFactory(mealDatabase)
+
+        mealViewModel = ViewModelProvider(this, mealViewModelFactory)[MealViewModel::class.java]
         mealViewModel.getMealById(mealId)
         observeMealLiveData()
 
+        onFavouriteButtonClick()
+
         onYoutubeImageClick()
+    }
+
+    private fun onFavouriteButtonClick() {
+        binding.floatingButtonMeal.setOnClickListener {
+            currentMeal?.let {
+                mealViewModel.insertMeal(currentMeal!!)
+                Toast.makeText(this, "Recipe Added to Favourites", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun onYoutubeImageClick() {
@@ -52,17 +67,17 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun observeMealLiveData() {
-        mealViewModel.observerMealLiveData().observe(this, object : Observer<Meal> {
-            override fun onChanged(value: Meal) {
+        mealViewModel.observerMealLiveData().observe(this
+        ) { value ->
+            binding.tvCategory.text = "Category: ${value.strCategory}"
+            binding.tvOrigin.text = "Origin: ${value.strArea}"
+            binding.tvMealInstructions.text = value.strInstructions
+            youtubeLink = value.strYoutube.toString()
 
-                binding.tvCategory.text = "Category: ${value.strCategory}"
-                binding.tvOrigin.text = "Origin: ${value.strArea}"
-                binding.tvMealInstructions.text = value.strInstructions
-                youtubeLink = value.strYoutube
+            currentMeal = value;
 
-                onResponseCase()
-            }
-        })
+            onResponseCase()
+        }
     }
 
     private fun setInformationInViews() {

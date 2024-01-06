@@ -10,26 +10,33 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.food_app.databinding.PopularItemCardBinding
-import com.example.food_app.pojo.MealByCategory
+import com.example.food_app.databinding.FragmentFavouritesBinding
+import com.example.food_app.databinding.MealsByCategoryItemBinding
+import com.example.food_app.pojo.Meal
 
-class MostPopularItemsAdapter: RecyclerView.Adapter<MostPopularItemsAdapter.PopularMealsViewHolder>() {
+class FavouriteMealsAdapter(): RecyclerView.Adapter<FavouriteMealsAdapter.FavouriteMealsViewHolder>() {
 
-    private var mealsList = ArrayList<MealByCategory>()
-    lateinit var onItemClicked: ((MealByCategory) ->  Unit)
+    private var favMeals = ArrayList<Meal>()
+    lateinit var onItemClicked: ((Meal) ->  Unit)
 
-    fun setMeals(mealsList: List<MealByCategory>) {
-        this.mealsList = mealsList as ArrayList<MealByCategory>
+    fun setFavMeals(favMealsList: List<Meal>) {
+        favMeals = favMealsList as ArrayList<Meal>
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularMealsViewHolder {
-        return PopularMealsViewHolder(PopularItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteMealsViewHolder {
+        return FavouriteMealsViewHolder(
+            MealsByCategoryItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
-    override fun onBindViewHolder(holder: PopularMealsViewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: FavouriteMealsViewHolder, position: Int) {
         Glide.with(holder.itemView)
-            .load(mealsList[position].strMealThumb).listener(object : RequestListener<Drawable> {
+            .load(favMeals[position].strMealThumb).listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
@@ -51,19 +58,10 @@ class MostPopularItemsAdapter: RecyclerView.Adapter<MostPopularItemsAdapter.Popu
                     return false
                 }
             })
-            .into(holder.binding.imgPopularMeal)
-
-
-
-        holder.itemView.setOnClickListener {
-            onItemClicked.invoke(mealsList[position])
-        }
+            .into(holder.binding.imgMealThumb)
     }
 
-    override fun getItemCount(): Int {
-        return mealsList.size
-    }
+    override fun getItemCount() = favMeals.size
 
-
-    inner class PopularMealsViewHolder(val binding:PopularItemCardBinding): RecyclerView.ViewHolder(binding.root)
+    class FavouriteMealsViewHolder(val binding: MealsByCategoryItemBinding): RecyclerView.ViewHolder(binding.root)
 }
