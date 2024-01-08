@@ -19,7 +19,10 @@ class MealsAdapter(): RecyclerView.Adapter<MealsAdapter.FavouriteMealsViewHolder
     lateinit var onItemClicked: ((Meal) ->  Unit)
 
     fun setFavMeals(favMealsList: List<Meal>) {
-        favMeals = favMealsList as ArrayList<Meal>
+        favMeals = if(favMealsList.isEmpty())
+            ArrayList()
+        else
+            favMealsList as ArrayList<Meal>
         notifyDataSetChanged()
     }
 

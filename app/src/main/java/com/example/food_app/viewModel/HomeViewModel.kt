@@ -26,7 +26,7 @@ class HomeViewModel(): ViewModel() {
         RetrofitInstance.api.getRandomMeal().enqueue(object: Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 if (response.body() != null) {
-                    val randomMeal: Meal = response.body()!!.meals[0]
+                    val randomMeal: Meal = response.body()!!.meals!![0]
                     randomMealLiveData.value = randomMeal
 
                 } else {

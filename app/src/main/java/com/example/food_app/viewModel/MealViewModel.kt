@@ -23,7 +23,7 @@ class MealViewModel(
         RetrofitInstance.api.getMealById(id).enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 if (response.body() != null) {
-                    val meal: Meal = response.body()!!.meals[0]
+                    val meal: Meal = response.body()!!.meals!![0]
                     mealLiveData.value = meal
 
                 } else {

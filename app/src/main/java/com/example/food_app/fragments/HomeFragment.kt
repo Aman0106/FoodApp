@@ -130,6 +130,9 @@ class HomeFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
             adapter = mealCategoriesAdapter
         }
+
+        val spacing = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._5sdp) // Adjust spacing as needed
+        binding.recViewTryByCat.addItemDecoration(GridSpacingItemDecoration(2, spacing, true, 0))
     }
 
     private fun onRandomMealClick() {
@@ -153,6 +156,8 @@ class HomeFragment : Fragment() {
 
                 meal = value
 
+                binding.tvMealName.visibility = View.VISIBLE
+                binding.tvMealName.text = meal.strMeal
                 binding.progressRandMeal.visibility = View.INVISIBLE
             }
     }

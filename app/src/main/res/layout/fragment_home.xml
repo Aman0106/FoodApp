@@ -68,17 +68,35 @@
                 app:cardUseCompatPadding="true"
                 android:layout_marginHorizontal="@dimen/margin_start"
                 app:cardCornerRadius="@dimen/_10sdp"
-                android:elevation="@dimen/_200sdp">
+                app:cardElevation="@dimen/_5sdp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+
+
                     <ImageView
                         android:id="@+id/img_random_meal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/white"
                         android:scaleType="centerCrop"/>
+
+                    <TextView
+                        android:id="@+id/tv_meal_name"
+                        android:layout_width="@dimen/_120sdp"
+                        android:layout_height="wrap_content"
+                        android:text="Baingan Bharta"
+                        android:textSize="@dimen/_25ssp"
+                        android:fontFamily="@font/noto_sans_regular"
+                        android:textColor="@color/white"
+                        android:background="@drawable/meals_text_background"
+                        android:visibility="invisible"
+
+                        android:padding="@dimen/_5sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/img_random_meal"
+                        app:layout_constraintStart_toStartOf="@id/img_random_meal"/>
 
                     <ProgressBar
                         android:id="@+id/progress_rand_meal"
@@ -103,7 +121,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/margin_start"
-                android:text="Popular Today"
+                android:text="Popular this week"
                 android:fontFamily="@font/noto_sans_regular"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -139,15 +157,16 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_try_categories"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/margin_start"
-                android:layout_marginEnd="@dimen/margin_start"
+                android:layout_marginHorizontal="@dimen/margin_start"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_20sdp"
+                app:cardElevation="@dimen/_20sdp">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rec_view_try_by_cat"
+                    android:background="#0000"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none"/>
+                    android:layout_height="wrap_content"/>
 
             </androidx.cardview.widget.CardView>
 

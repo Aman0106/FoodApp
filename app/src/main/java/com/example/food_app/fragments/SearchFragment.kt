@@ -74,8 +74,9 @@ class SearchFragment : Fragment() {
 
     private fun observeMealsBySearch() {
         searchViewModel.observeMealsLiveData().observe(viewLifecycleOwner) {
-            mealsAdapter.setFavMeals(it)
-            Toast.makeText(context, "${it.size} meals found", Toast.LENGTH_SHORT).show()
+            if(it != null)
+                mealsAdapter.setFavMeals(it)
+//            Toast.makeText(context, "${it.size} meals found", Toast.LENGTH_SHORT).show()
         }
     }
 
