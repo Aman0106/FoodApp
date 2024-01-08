@@ -10,9 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.food_app.R
 import com.example.food_app.activities.MealActivity
-import com.example.food_app.adapters.FavouriteMealsAdapter
+import com.example.food_app.adapters.MealsAdapter
 import com.example.food_app.dao.MealDatabase
 import com.example.food_app.databinding.FragmentFavouritesBinding
 import com.example.food_app.viewModel.FavouritesViewModel
@@ -22,7 +21,7 @@ class FavouritesFragment : Fragment() {
 
     private lateinit var binding: FragmentFavouritesBinding
     private lateinit var favouritesViewModel: FavouritesViewModel
-    private lateinit var favouriteMealsAdapter: FavouriteMealsAdapter
+    private lateinit var favouriteMealsAdapter: MealsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +31,7 @@ class FavouritesFragment : Fragment() {
 
         favouritesViewModel = ViewModelProvider(this, favouritesViewModelFactory)[FavouritesViewModel::class.java]
 
-        favouriteMealsAdapter = FavouriteMealsAdapter()
+        favouriteMealsAdapter = MealsAdapter()
     }
 
     override fun onCreateView(
