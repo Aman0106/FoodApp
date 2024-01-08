@@ -12,10 +12,6 @@
         <action
             android:id="@+id/action_homeFragment_to_mealsByCategory"
             app:destination="@id/mealsByCategory">
-<!--            <argument-->
-<!--                android:name="cat_name"-->
-<!--                app:argType="integer"-->
-<!--                android:defaultValue="1"-->
         </action>
     </fragment>
     <fragment
@@ -33,10 +29,5 @@
         android:name="com.example.food_app.fragments.MealsByCategoryFragment"
         android:label="Meals by Category"
         tools:layout="@layout/fragment_meals_by_category">
-
-        <argument
-            android:name="categoryId"
-            app:argType="integer"
-            android:defaultValue="0" />
     </fragment>
 </navigation>

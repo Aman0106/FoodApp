@@ -59,6 +59,12 @@ class FavouriteMealsAdapter(): RecyclerView.Adapter<FavouriteMealsAdapter.Favour
                 }
             })
             .into(holder.binding.imgMealThumb)
+
+        holder.binding.tvMealName.text = favMeals[position].strMeal
+
+        holder.binding.cardMealsByCat.setOnClickListener {
+            onItemClicked.invoke(favMeals[position])
+        }
     }
 
     override fun getItemCount() = favMeals.size

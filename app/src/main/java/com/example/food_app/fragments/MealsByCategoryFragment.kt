@@ -66,6 +66,14 @@ class MealsByCategoryFragment : Fragment() {
 
         mealByCategoryViewModel.getMealsByCategory(currentMealCategory.strCategory)
         observeMealCategories()
+
+        setBackButtonCLick()
+    }
+
+    private fun setBackButtonCLick() {
+        binding.imgBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun prepareMealsByCategoryAdapter() {
@@ -93,7 +101,8 @@ class MealsByCategoryFragment : Fragment() {
             binding.tvMealsCount.text = "${currentMealCategory.strCategory}: ${it.size}"
             mealsByCategoryAdapter.setMeals(it)
 
-            binding.loadingMeals.visibility = View.INVISIBLE
+            binding.progressMeals.visibility = View.GONE
+            binding.tvMealsCount.visibility = View.VISIBLE
         }
     }
 
